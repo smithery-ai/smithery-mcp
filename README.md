@@ -18,8 +18,6 @@ MCP Finder is a tool for finding Model Context Protocol (MCP) servers.
 
 ```bash
 npm install
-# 또는
-yarn install
 ```
 
 2. Set up environment variables

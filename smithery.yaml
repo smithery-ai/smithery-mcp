@@ -8,5 +8,5 @@ startCommand:
         type: string
         description: The API key for accessing the Smithery API.
   commandFunction: |-
-    (config) => ({ command: 'node', args: ['dist/index.js'], env: { SMITHERY_API_KEY: config.smitheryApiKey } })
+    (config) => ({ command: 'node', args: ['build/index.js'], env: { SMITHERY_API_KEY: config.smitheryApiKey } })
   type: stdio

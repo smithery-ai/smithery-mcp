@@ -1,12 +1,13 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
 startCommand:
-  configSchema:
-    type: object
-    required:
-      - smitheryApiKey
-    properties:
-      smitheryApiKey:
-        type: string
-        description: The API key for accessing the Smithery API.
-  commandFunction: |-
-    (config) => ({ command: 'node', args: ['build/index.js'], env: { SMITHERY_API_KEY: config.smitheryApiKey } })
   type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    properties: {}
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'node', args: ['build/index.js'], env: { SMITHERY_API_KEY: process.env.SMITHERY_API_KEY || 'your_api_key_here' } })
+  exampleConfig: {}

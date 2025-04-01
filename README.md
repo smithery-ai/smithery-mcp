@@ -1,5 +1,7 @@
 # MCP Finder
 
+[![smithery badge](https://smithery.ai/badge/@bbangjooo/mcp-finder-mcp-server)](https://smithery.ai/server/@bbangjooo/mcp-finder-mcp-server)
+
 ## Introduction
 
 MCP Finder is a tool for finding Model Context Protocol (MCP) servers.
@@ -11,6 +13,14 @@ MCP Finder is a tool for finding Model Context Protocol (MCP) servers.
 - Node.js (v14.0.0 or higher)
 - npm or yarn
 - `.env` file (SMITHERY_API_KEY required)
+
+### Installing via Smithery
+
+To install mcp-finder-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@bbangjooo/mcp-finder-mcp-server):
+
+```bash
+npx -y @smithery/cli install @bbangjooo/mcp-finder-mcp-server --client claude
+```
 
 ### Installation
 

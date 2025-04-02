@@ -36,6 +36,18 @@ export class SmitheryClient {
     return response.json();
   }
 
+  async getServerDetailOrNull(
+    qualifiedName: string
+  ): Promise<ISmitheryServerDetailResponse | null> {
+    const response = await this.fetchClient(
+      `${this.baseUrl}/servers/${qualifiedName}`
+    );
+    if (response.status === 404) {
+      return null;
+    }
+    return response.json();
+  }
+
   async getInstallCommand(
     qualifiedName: string,
     client: McpClientListEnum

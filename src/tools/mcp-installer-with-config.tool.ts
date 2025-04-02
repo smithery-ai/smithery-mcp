@@ -18,11 +18,19 @@ export class McpInstallerWithConfigTool implements ITool {
 
   fn: (params: ZodRawShape) => Promise<CallToolResult> = async (params) => {
     const qualifiedName = params.qualifiedName.toString();
-    const client = params.client.toString() as McpClientListEnum;
+    const clientToInstall = params.client.toString() as McpClientListEnum;
     const smitheryClient = new SmitheryClient();
+    const foundServer = await smitheryClient.getServerDetailOrNull(
+      qualifiedName
+    );
+    if (!foundServer) {
+      return {
+        content: [{ type: "text", text: `Server not found: ${qualifiedName}` }],
+      };
+    }
     const installCommand = await smitheryClient.getInstallCommand(
       qualifiedName,
-      client
+      clientToInstall
     );
     return {
       content: [{ type: "text", text: installCommand }],

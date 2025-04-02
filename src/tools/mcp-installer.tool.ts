@@ -17,6 +17,14 @@ export class McpInstallerTool implements ITool {
     const qualifiedName = params.qualifiedName.toString();
     const client = params.client.toString() as McpClientListEnum;
     const smitheryClient = new SmitheryClient();
+    const foundServer = await smitheryClient.getServerDetailOrNull(
+      qualifiedName
+    );
+    if (!foundServer) {
+      return {
+        content: [{ type: "text", text: `Server not found: ${qualifiedName}` }],
+      };
+    }
     const installCommand = await smitheryClient.getInstallCommand(
       qualifiedName,
       client

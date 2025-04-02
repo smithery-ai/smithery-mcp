@@ -1,14 +1,17 @@
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { z, ZodRawShape } from "zod";
+import { ZodRawShape } from "zod";
 import { SmitheryClient } from "../client/smithery.client.js";
 import { IFindMcpResponse } from "../interfaces/response/find-mcp.response.js";
 import { ITool } from "../interfaces/tool.js";
+import { zodType } from "../interfaces/zod.type.js";
 export class McpFinderTool implements ITool {
   private readonly smitheryClient = new SmitheryClient();
   name: string = "find-mcp";
   description: string = "Find the MCP servers by given name";
   parameters: ZodRawShape = {
-    mcpServerName: z.string().describe("The name of the MCP server to find"),
+    mcpServerName: zodType.mcpServerName.describe(
+      "The name of the MCP server to find"
+    ),
   };
   fn: (params: ZodRawShape) => Promise<CallToolResult> = async (params) => {
     const mcpServerName = params.mcpServerName.toString();

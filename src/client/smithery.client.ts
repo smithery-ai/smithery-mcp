@@ -1,8 +1,8 @@
+import { McpClientListEnum } from "../interfaces/mcp-client-list.type.js";
 import {
   ISmitheryServerDetailResponse,
   ISmitheryServerListResponse,
 } from "../interfaces/response/smithery.api.response.js";
-
 export class SmitheryClient {
   private readonly apiKey: string = process.env.SMITHERY_API_KEY ?? "";
   private readonly baseUrl: string = "https://registry.smithery.ai";
@@ -34,5 +34,12 @@ export class SmitheryClient {
       `${this.baseUrl}/servers/${qualifiedName}`
     );
     return response.json();
+  }
+
+  async getInstallCommand(
+    qualifiedName: string,
+    client: McpClientListEnum
+  ): Promise<string> {
+    return `npx -y @smithery/cli@latest install ${qualifiedName} --client ${client}`;
   }
 }

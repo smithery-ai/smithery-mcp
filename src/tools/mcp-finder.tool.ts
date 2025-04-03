@@ -4,8 +4,11 @@ import { SmitheryClient } from "../client/smithery.client.js";
 import { IFindMcpResponse } from "../interfaces/response/find-mcp.response.js";
 import { ITool } from "../interfaces/tool.js";
 import { zodType } from "../interfaces/zod.type.js";
+import { ToolResponseGenerator } from "./util/tool-response.generator.js";
+
 export class McpFinderTool implements ITool {
   private readonly smitheryClient = new SmitheryClient();
+  private readonly responseGenerator = new ToolResponseGenerator();
   name: string = "find-mcp";
   description: string = "Find the MCP servers by given name";
   parameters: ZodRawShape = {
@@ -13,6 +16,7 @@ export class McpFinderTool implements ITool {
       "The name of the MCP server to find"
     ),
   };
+
   fn: (params: ZodRawShape) => Promise<CallToolResult> = async (params) => {
     const mcpServerName = params.mcpServerName.toString();
     const searchResult = await this.smitheryClient.getServerList(mcpServerName);
@@ -25,8 +29,6 @@ export class McpFinderTool implements ITool {
       homepage: tool.homepage,
     }));
 
-    return {
-      content: [{ type: "text", text: JSON.stringify(response) }],
-    };
+    return this.responseGenerator.textResponse(JSON.stringify(response));
   };
 }

@@ -28,5 +28,16 @@ interface IPagination {
 export interface IConnection {
   type: string;
   url?: string;
-  configSchema: { [key: string]: any };
+  configSchema: IConfigSchema;
+}
+
+interface IConfigSchema {
+  type: string;
+  required: string[];
+  properties: { [key: string]: IConfigSchemaProperty };
+}
+
+interface IConfigSchemaProperty {
+  type: string;
+  description: string;
 }

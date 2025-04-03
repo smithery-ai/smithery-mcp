@@ -4,7 +4,10 @@
 
 ## Introduction
 
-MCP Finder is a tool for finding Model Context Protocol (MCP) servers.
+MCP Finder serves the following tools
+
+- find-mcp: finding Model Context Protocol (MCP) servers from registry
+- collect-config: collecting config to be used for connection to mcp server
 
 ## Getting Started
 

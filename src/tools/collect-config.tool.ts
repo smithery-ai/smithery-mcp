@@ -9,7 +9,8 @@ export class CollectConfigTool implements ITool {
   private readonly smitheryClient = new SmitheryClient();
   private readonly responseGenerator = new ToolResponseGenerator();
   name: string = "collect-config";
-  description: string = "Collect the config from the user";
+  description: string =
+    "Collect the config to be used for connection to mcp server";
   parameters: ZodRawShape = {
     qualifiedName: zodType.qualifiedName.describe(
       "The qualified name of the config to collect"

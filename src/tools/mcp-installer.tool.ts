@@ -8,8 +8,9 @@ import { zodType } from "../interfaces/zod.type.js";
 import { ToolResponseGenerator } from "./util/tool-response.generator.js";
 export class McpInstallerTool implements ITool {
   private readonly responseGenerator = new ToolResponseGenerator();
-  name: string = "mcp-installer";
-  description: string = "Install the MCP server without configuration";
+  name: string = "install-mcp";
+  description: string =
+    "Install the MCP server on your local machine. You can install the MCP server with configuration.";
   parameters: ZodRawShape = {
     qualifiedName: zodType.qualifiedName.describe(
       "The qualified name of the MCP server to install. ex) @bbangjooo/mcp-finder-mcp-server"

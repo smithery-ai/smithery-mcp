@@ -8,6 +8,7 @@ MCP Finder serves the following tools
 
 - find-mcp: finding Model Context Protocol (MCP) servers from registry
 - collect-config: collecting config to be used for connection to mcp server
+- install-mcp: installing mcp server to your local machine
 
 ## Getting Started
 

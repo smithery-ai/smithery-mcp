@@ -15,6 +15,9 @@ export class McpInstallerTool implements ITool {
       "The qualified name of the MCP server to install. ex) @bbangjooo/mcp-finder-mcp-server"
     ),
     client: zodType.client.describe("The client to install"),
+    config: zodType.connectionConfig
+      .describe("Configuration schema")
+      .optional(),
   };
   fn: (params: ZodRawShape) => Promise<CallToolResult> = async (params) => {
     const qualifiedName = params.qualifiedName.toString();
@@ -24,13 +27,14 @@ export class McpInstallerTool implements ITool {
       qualifiedName
     );
     if (!foundServer) {
-      return {
-        content: [{ type: "text", text: `Server not found: ${qualifiedName}` }],
-      };
+      return this.responseGenerator.textResponse(
+        `Server not found: ${qualifiedName}`
+      );
     }
     const installCommand = await smitheryClient.getInstallCommand(
       qualifiedName,
-      client
+      client,
+      params.config
     );
     exec(installCommand, (error, stdout, stderr) => {
       if (error || stderr) {

@@ -50,8 +50,10 @@ export class SmitheryClient {
 
   async getInstallCommand(
     qualifiedName: string,
-    client: McpClientListEnum
+    client: McpClientListEnum,
+    config: { [key: string]: any } | null
   ): Promise<string> {
-    return `npx -y @smithery/cli@latest install ${qualifiedName} --client ${client}`;
+    const configString = config ? `--config ${JSON.stringify(config)}` : "";
+    return `npx -y @smithery/cli@latest install ${qualifiedName} --client ${client} ${configString}`;
   }
 }

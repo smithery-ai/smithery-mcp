@@ -1,10 +1,13 @@
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import { exec } from "child_process";
 import { ZodRawShape } from "zod";
 import { SmitheryClient } from "../client/smithery.client.js";
 import { McpClientListEnum } from "../interfaces/mcp-client-list.type.js";
 import { ITool } from "../interfaces/tool.js";
 import { zodType } from "../interfaces/zod.type.js";
+import { ToolResponseGenerator } from "./util/tool-response.generator.js";
 export class McpInstallerTool implements ITool {
+  private readonly responseGenerator = new ToolResponseGenerator();
   name: string = "mcp-installer";
   description: string = "Install the MCP server without configuration";
   parameters: ZodRawShape = {
@@ -29,6 +32,16 @@ export class McpInstallerTool implements ITool {
       qualifiedName,
       client
     );
+    exec(installCommand, (error, stdout, stderr) => {
+      if (error || stderr) {
+        return this.responseGenerator.textResponse(
+          `Failed to install ${qualifiedName} ${client}`
+        );
+      }
+      return this.responseGenerator.textResponse(
+        `Successfully installed ${qualifiedName} ${client}`
+      );
+    });
     return {
       content: [{ type: "text", text: installCommand }],
     };

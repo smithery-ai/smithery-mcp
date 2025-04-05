@@ -8,7 +8,7 @@ import { zodType } from "../interfaces/zod.type.js";
 import { ToolResponseGenerator } from "./util/tool-response.generator.js";
 export class McpInstallerTool implements ITool {
   private readonly responseGenerator = new ToolResponseGenerator();
-  name: string = "install-mcp";
+  name: string = "install_mcp";
   description: string =
     "Install the MCP server on your local machine. You can install the MCP server with configuration.";
   parameters: ZodRawShape = {

@@ -6,7 +6,7 @@ import { tools } from "./tools/index.js";
 dotenv.config();
 
 const server = new McpServer({
-  name: "mcp-finder",
+  name: "mcp-registry",
   version: "1.0.0",
   capabilities: {
     resources: {},
@@ -20,7 +20,7 @@ async function main() {
     server.tool(tool.name, tool.description, tool.parameters, tool.fn);
   });
   await server.connect(transport);
-  console.error("MCP Finder Server running on stdio");
+  console.error("MCP Registry Server running on stdio");
 }
 
 main().catch((error) => {

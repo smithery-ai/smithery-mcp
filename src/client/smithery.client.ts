@@ -20,10 +20,15 @@ export class SmitheryClient {
     };
   }
 
-  async getServerList(query: string): Promise<ISmitheryServerListResponse> {
+  async getServerListOrNull(
+    query: string
+  ): Promise<ISmitheryServerListResponse | null> {
     const response = await this.fetchClient(
       `${this.baseUrl}/servers?q=${query}`
     );
+    if (response.status !== 200) {
+      return null;
+    }
     return response.json();
   }
 
@@ -53,7 +58,8 @@ export class SmitheryClient {
     client: McpClientListEnum,
     config: { [key: string]: any } | null
   ): Promise<string> {
-    const configString = config ? `--config ${JSON.stringify(config)}` : "";
+    const escapedConfig = JSON.stringify(config).replace(/"/g, '\\"');
+    const configString = config ? `--config "${escapedConfig}"` : "";
     return `npx -y @smithery/cli@latest install ${qualifiedName} --client ${client} ${configString}`;
   }
 }

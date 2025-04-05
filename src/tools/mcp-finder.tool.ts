@@ -9,7 +9,7 @@ import { ToolResponseGenerator } from "./util/tool-response.generator.js";
 export class McpFinderTool implements ITool {
   private readonly smitheryClient = new SmitheryClient();
   private readonly responseGenerator = new ToolResponseGenerator();
-  name: string = "find-mcp";
+  name: string = "find_mcp";
   description: string = "Find the MCP servers by given name";
   parameters: ZodRawShape = {
     mcpServerName: zodType.mcpServerName.describe(
@@ -19,8 +19,14 @@ export class McpFinderTool implements ITool {
 
   fn: (params: ZodRawShape) => Promise<CallToolResult> = async (params) => {
     const mcpServerName = params.mcpServerName.toString();
-    const searchResult = await this.smitheryClient.getServerList(mcpServerName);
-
+    const searchResult = await this.smitheryClient.getServerListOrNull(
+      mcpServerName
+    );
+    if (!searchResult) {
+      return this.responseGenerator.textResponse(
+        "Error occured while searching for MCP server"
+      );
+    }
     const response: IFindMcpResponse[] = searchResult.servers.map((tool) => ({
       qualifiedName: tool.qualifiedName,
       displayName: tool.displayName,

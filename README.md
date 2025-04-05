@@ -23,6 +23,7 @@ MCP Installer serves the following tools
 You can install MCP Installer using the following command:
 
 ```bash
+npm install @bbangjo/mcp-installer
 npx @bbangjo/mcp-installer --client <client-type> --key <your-smithery-api-key>
 ```
 

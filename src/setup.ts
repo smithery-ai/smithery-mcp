@@ -23,7 +23,6 @@ export async function runSetup() {
   try {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
-    console.log(__dirname);
     const setupScriptPath = join(__dirname, "install.js");
     const setupScriptUrl = createFileURL(setupScriptPath);
 

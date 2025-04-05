@@ -1,16 +1,16 @@
 {
   "name": "@bbangjo/mcp-installer",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "type": "module",
   "bin": {
-    "mcp-installer": "build/index.js"
+    "mcp-installer": "build/index.js",
+    "setup": "build/install.js"
   },
   "scripts": {
-    "build": "tsc && chmod 755 build/index.js"
+    "build": "tsc && chmod 755 build/index.js && shx cp install.js build/ && shx chmod +x build/*.js"
   },
   "files": [
-    "build",
-    "install.js"
+    "build"
   ],
   "keywords": [
     "mcp",
@@ -27,7 +27,7 @@
   "license": "ISC",
   "description": "MCP installer for cursor and claude",
   "dependencies": {
-    "@bbangjo/mcp-installer": "^1.0.10",
+    "@bbangjo/mcp-installer": "^1.0.13",
     "@modelcontextprotocol/sdk": "^1.8.0",
     "commander": "^13.1.0",
     "dotenv": "^16.4.7",

@@ -2,19 +2,14 @@
 
 import { program } from "commander";
 import fs from "fs";
-import os from "os";
 import path from "path";
-console.log("Running install.js");
 const ENABLED_CLIENTS = ["cursor", "claude"];
 
 export default async function main() {
   program
     .name("mcp-installer-setup")
     .description("Setup for MCP installer")
-    .version("1.0.0");
-
-  program
-    .command("install")
+    .version("1.0.0")
     .requiredOption("-c, --client <type>", "client type to install mcp server")
     .requiredOption("-k, --key <key>", "smithery api key")
     .description("install mcp server to specified client")
@@ -25,23 +20,8 @@ export default async function main() {
         );
         process.exit(1);
       }
-      const configPath = getConfigPath(options.client);
       try {
-        let config = {};
-        if (fs.existsSync(configPath)) {
-          const configContent = fs.readFileSync(configPath, "utf8");
-          config = JSON.parse(configContent);
-        }
-        addToConfig(config, "SMITHERY_API_KEY", options.key);
-        addToConfig(config, "mcp-installer", {
-          command: "node",
-          args: [
-            path.join(process.cwd(), "build", "index.js"),
-            "&&",
-            `SMITHERY_API_KEY=${options.key}`,
-          ],
-        });
-        fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+        installMcpServer(options.client, options.key);
         console.log("✅ MCP server installed successfully.");
       } catch (error) {
         console.error("❌ error occurred during installation:", error.message);
@@ -52,14 +32,72 @@ export default async function main() {
   program.parse();
 }
 
+function installMcpServer(client, key) {
+  if (!ENABLED_CLIENTS.includes(client)) {
+    console.error(
+      `currently only ${ENABLED_CLIENTS.join(", ")} client is supported.`
+    );
+    process.exit(1);
+  }
+  const configPath = getConfigPath(options.client);
+  let config = {};
+  if (fs.existsSync(configPath)) {
+    const configContent = fs.readFileSync(configPath, "utf8");
+    config = JSON.parse(configContent);
+  }
+  addToConfig(config, "mcp-installer", {
+    command: "node",
+    args: [
+      path.join(process.cwd(), "build", "index.js"),
+      "&&",
+      `SMITHERY_API_KEY=${options.key}`,
+    ],
+  });
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+}
+
 function getConfigPath(client) {
   switch (client) {
     case "cursor":
-      return path.join(os.homedir(), ".cursor", "mcp.json");
+      return getCursorConfigPath();
     case "claude":
-      return path.join(os.homedir(), ".cursor", "mcp.json");
+      return getClaudeConfigPath();
     default:
       throw new Error(`${client} is not supported.`);
+  }
+}
+
+function getCursorConfigPath() {
+  const os = platform();
+  switch (os) {
+    case "win32":
+      return join(process.env.APPDATA, "Cursor", "mcp.json");
+    case "darwin":
+      return join(homedir(), ".cursor", "mcp.json");
+    case "linux":
+      return join(homedir(), ".config", "Cursor", "mcp.json");
+    default:
+      return join(homedir(), ".cursor", "mcp.json");
+  }
+}
+
+function getClaudeConfigPath() {
+  const os = platform();
+  switch (os) {
+    case "win32":
+      return join(process.env.APPDATA, "Claude", "claude_desktop_config.json");
+    case "darwin":
+      return join(
+        homedir(),
+        "Library",
+        "Application Support",
+        "Claude",
+        "claude_desktop_config.json"
+      );
+    case "linux":
+      return join(homedir(), ".config", "Claude", "claude_desktop_config.json");
+    default:
+      return join(homedir(), ".claude_desktop_config.json");
   }
 }
 

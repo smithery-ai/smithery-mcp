@@ -2,7 +2,9 @@
 
 import { program } from "commander";
 import fs from "fs";
-import path from "path";
+import { homedir, platform } from "os";
+import { join } from "path";
+
 const ENABLED_CLIENTS = ["cursor", "claude"];
 
 export default async function main() {
@@ -10,8 +12,11 @@ export default async function main() {
     .name("mcp-installer-setup")
     .description("Setup for MCP installer")
     .version("1.0.0")
-    .requiredOption("-c, --client <type>", "client type to install mcp server")
-    .requiredOption("-k, --key <key>", "smithery api key")
+    .requiredOption(
+      "-c, --client <type>",
+      "client type to install mcp server (claude, cursor)"
+    )
+    .requiredOption("-k, --key <smithery-api-key>", "smithery api key")
     .description("install mcp server to specified client")
     .action((options) => {
       if (!ENABLED_CLIENTS.includes(options.client)) {
@@ -39,19 +44,16 @@ function installMcpServer(client, key) {
     );
     process.exit(1);
   }
-  const configPath = getConfigPath(options.client);
+  const configPath = getConfigPath(client);
   let config = {};
   if (fs.existsSync(configPath)) {
     const configContent = fs.readFileSync(configPath, "utf8");
     config = JSON.parse(configContent);
   }
-  addToConfig(config, "mcp-installer", {
-    command: "node",
-    args: [
-      path.join(process.cwd(), "build", "index.js"),
-      "&&",
-      `SMITHERY_API_KEY=${options.key}`,
-    ],
+  addToConfig(config["mcpServers"], "mcp-installer", {
+    command: "npx",
+    args: ["@bbangjo/mcp-installer"],
+    env: { SMITHERY_API_KEY: key },
   });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
@@ -103,5 +105,6 @@ function getClaudeConfigPath() {
 
 function addToConfig(config, key, value) {
   config[key] = value;
-  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
+
+main();

@@ -5,7 +5,7 @@ import { runSetup } from "./setup.js";
 import { tools } from "./tools/index.js";
 
 const server = new McpServer({
-  name: "mcp-registry",
+  name: "mcp-installer",
   version: "1.0.0",
   capabilities: {
     resources: {},

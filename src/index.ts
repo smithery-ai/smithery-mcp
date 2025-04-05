@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import dotenv from "dotenv";
+import { runSetup } from "./setup.js";
 import { tools } from "./tools/index.js";
-console.log("Running index.js");
-dotenv.config();
 
 const server = new McpServer({
   name: "mcp-registry",
@@ -17,6 +15,10 @@ const server = new McpServer({
 
 async function main() {
   const transport = new StdioServerTransport();
+  if (process.argv[2] === "setup") {
+    await runSetup();
+    return;
+  }
   tools.forEach((tool) => {
     server.tool(tool.name, tool.description, tool.parameters, tool.fn);
   });

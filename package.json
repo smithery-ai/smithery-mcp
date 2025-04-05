@@ -27,7 +27,6 @@
   "license": "ISC",
   "description": "MCP installer for cursor and claude",
   "dependencies": {
-    "@bbangjo/mcp-installer": "^1.0.17",
     "@modelcontextprotocol/sdk": "^1.8.0",
     "commander": "^13.1.0",
     "dotenv": "^16.4.7",

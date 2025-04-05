@@ -1,10 +1,10 @@
-# MCP Finder
+# MCP Registry
 
 [![smithery badge](https://smithery.ai/badge/@bbangjooo/mcp-finder-mcp-server)](https://smithery.ai/server/@bbangjooo/mcp-finder-mcp-server)
 
 ## Introduction
 
-MCP Finder serves the following tools
+MCP Registry serves the following tools
 
 - find-mcp: finding Model Context Protocol (MCP) servers from registry
 - collect-config: collecting config to be used for connection to mcp server
@@ -17,14 +17,6 @@ MCP Finder serves the following tools
 - Node.js (v14.0.0 or higher)
 - npm or yarn
 - `.env` file (SMITHERY_API_KEY required)
-
-### Installing via Smithery
-
-To install mcp-finder-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@bbangjooo/mcp-finder-mcp-server):
-
-```bash
-npx -y @smithery/cli install @bbangjooo/mcp-finder-mcp-server --client claude
-```
 
 ### Installation
 

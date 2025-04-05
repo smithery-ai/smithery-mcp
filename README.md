@@ -16,9 +16,43 @@ MCP Installer serves the following tools
 
 - Node.js (v14.0.0 or higher)
 - npm or yarn
-- `.env` file (SMITHERY_API_KEY required)
+- SMITHERY_API_KEY (https://smithery.ai/)
 
-### Installation
+## Installation
+
+You can install MCP Installer using the following command:
+
+```bash
+npx @bbangjo/mcp-installer --client <client-type> --key <your-smithery-api-key>
+```
+
+Where:
+
+- `<client-type>`: Currently supported clients are 'cursor' or 'claude'
+- `<your-smithery-api-key>`: Enter your Smithery API key
+
+Example:
+
+```bash
+npx @bbangjo/mcp-installer --client cursor --key your_smithery_api_key_here
+```
+
+Upon successful installation, you will see the message "✅ MCP server installed successfully."
+
+**Note**: Depending on the client type, the configuration file will be created in the following locations:
+
+- Cursor:
+
+  - Windows: `%APPDATA%\Cursor\mcp.json`
+  - macOS: `~/.cursor/mcp.json`
+  - Linux: `~/.config/Cursor/mcp.json`
+
+- Claude:
+  - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+  - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+  - Linux: `~/.config/Claude/claude_desktop_config.json`
+
+## Local setup
 
 1. Install dependencies
 
@@ -33,9 +67,7 @@ npm install
 SMITHERY_API_KEY=your_api_key_here
 ```
 
-### How to Run
-
-Running the server:
+3. Running the server:
 
 ```bash
 npm run build

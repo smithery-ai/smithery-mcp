@@ -3,7 +3,7 @@
   "version": "1.0.9",
   "type": "module",
   "bin": {
-    "setup": "install.js",
+    "setup": "build/install.js",
     "mcp-installer": "build/index.js"
   },
   "scripts": {

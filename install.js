@@ -4,7 +4,7 @@ import { program } from "commander";
 import fs from "fs";
 import os from "os";
 import path from "path";
-
+console.log("Running install.js");
 const ENABLED_CLIENTS = ["cursor", "claude"];
 
 program

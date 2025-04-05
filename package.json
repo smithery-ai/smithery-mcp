@@ -1,10 +1,10 @@
 {
   "name": "@bbangjo/mcp-installer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "mcp-installer": "build/index.js",
+    "run": "build/index.js",
     "setup": "build/install.js"
   },
   "scripts": {

@@ -1,10 +1,10 @@
-# MCP Registry
+# MCP Installer
 
 [![smithery badge](https://smithery.ai/badge/@bbangjooo/mcp-finder-mcp-server)](https://smithery.ai/server/@bbangjooo/mcp-finder-mcp-server)
 
 ## Introduction
 
-MCP Registry serves the following tools
+MCP Installer serves the following tools
 
 - find-mcp: finding Model Context Protocol (MCP) servers from registry
 - collect-config: collecting config to be used for connection to mcp server

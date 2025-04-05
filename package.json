@@ -1,6 +1,6 @@
 {
   "name": "@bbangjo/mcp-installer",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "type": "module",
   "bin": {
     "mcp-installer": "build/index.js",

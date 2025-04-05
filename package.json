@@ -1,21 +1,31 @@
 {
   "name": "@bbangjo/mcp-installer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "mcp-installer": "./build/index.js",
-    "install": "./install.js"
+    "mcp-installer": "build/index.js",
+    "setup": "build/install.js"
   },
   "scripts": {
-    "build": "tsc && chmod 755 build/index.js"
+    "build": "tsc && chmod 755 build/index.js",
+    "setup": "npm install && npm run build && node install.js"
   },
   "files": [
-    "build",
-    "install.js"
+    "build"
   ],
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mcp",
+    "mcp-installer",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "ai"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "bbangjo",
   "license": "ISC",
   "description": "",
   "dependencies": {

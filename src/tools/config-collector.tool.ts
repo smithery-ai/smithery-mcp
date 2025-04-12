@@ -8,7 +8,7 @@ import { ToolResponseGenerator } from "./util/tool-response.generator.js";
 export class ConfigCollectorTool implements ITool {
   private readonly smitheryClient = new SmitheryClient();
   private readonly responseGenerator = new ToolResponseGenerator();
-  name: string = "config_collector";
+  name: string = "collect_config";
   description: string =
     "Collect the config to be used for connection to mcp server";
   parameters: ZodRawShape = {

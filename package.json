@@ -1,6 +1,6 @@
 {
-  "name": "@bbangjo/mcp-installer",
-  "version": "1.0.18",
+  "name": "@smithery-ai/mcp-installer",
+  "version": "1.0.0",
   "type": "module",
   "bin": {
     "mcp-installer": "build/index.js",
@@ -27,7 +27,6 @@
   "license": "ISC",
   "description": "MCP installer for cursor and claude",
   "dependencies": {
-    "@bbangjo/mcp-installer": "^1.0.18",
     "@modelcontextprotocol/sdk": "^1.8.0",
     "commander": "^13.1.0",
     "dotenv": "^16.4.7",

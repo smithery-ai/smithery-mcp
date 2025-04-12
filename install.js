@@ -6,6 +6,8 @@ import { homedir, platform } from "os";
 import { join } from "path";
 
 const ENABLED_CLIENTS = ["cursor", "claude"];
+const ENABLED_CLIENT_STRING = ENABLED_CLIENTS.join(", ");
+const CLIENT_NOT_SUPPORTED_MESSAGE = `[Error] currently only ${ENABLED_CLIENT_STRING} client is supported.`;
 
 export default async function main() {
   program
@@ -14,15 +16,13 @@ export default async function main() {
     .version("1.0.0")
     .requiredOption(
       "-c, --client <type>",
-      "client type to install mcp server (claude, cursor)"
+      `client type to install mcp server (${ENABLED_CLIENT_STRING})`
     )
     .requiredOption("-k, --key <smithery-api-key>", "smithery api key")
     .description("install mcp server to specified client")
     .action((options) => {
       if (!ENABLED_CLIENTS.includes(options.client)) {
-        console.error(
-          `currently only ${ENABLED_CLIENTS.join(", ")} client is supported.`
-        );
+        console.error(CLIENT_NOT_SUPPORTED_MESSAGE);
         process.exit(1);
       }
       try {
@@ -39,9 +39,7 @@ export default async function main() {
 
 function installMcpServer(client, key) {
   if (!ENABLED_CLIENTS.includes(client)) {
-    console.error(
-      `currently only ${ENABLED_CLIENTS.join(", ")} client is supported.`
-    );
+    console.error(CLIENT_NOT_SUPPORTED_MESSAGE);
     process.exit(1);
   }
   const configPath = getConfigPath(client);
@@ -52,8 +50,14 @@ function installMcpServer(client, key) {
   }
   addToConfig(config["mcpServers"], "mcp-installer", {
     command: "npx",
-    args: ["@bbangjo/mcp-installer"],
-    env: { SMITHERY_API_KEY: key },
+    args: [
+      "-y",
+      "@smithery/cli@latest",
+      "run",
+      "@smithery-ai/mcp-installer",
+      "--key",
+      key,
+    ],
   });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
@@ -65,7 +69,7 @@ function getConfigPath(client) {
     case "claude":
       return getClaudeConfigPath();
     default:
-      throw new Error(`${client} is not supported.`);
+      throw new Error(CLIENT_NOT_SUPPORTED_MESSAGE);
   }
 }
 

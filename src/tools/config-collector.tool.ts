@@ -5,10 +5,10 @@ import { ITool } from "../interfaces/tool.js";
 import { zodType } from "../interfaces/zod.type.js";
 import { ToolResponseGenerator } from "./util/tool-response.generator.js";
 
-export class CollectConfigTool implements ITool {
+export class ConfigCollectorTool implements ITool {
   private readonly smitheryClient = new SmitheryClient();
   private readonly responseGenerator = new ToolResponseGenerator();
-  name: string = "collect_config";
+  name: string = "config_collector";
   description: string =
     "Collect the config to be used for connection to mcp server";
   parameters: ZodRawShape = {
